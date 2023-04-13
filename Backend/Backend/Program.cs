@@ -1,4 +1,7 @@
 
+using Backend.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Backend
 {
     public class Program
@@ -14,6 +17,10 @@ namespace Backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<StoreContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Cs"));
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
