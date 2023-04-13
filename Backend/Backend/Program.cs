@@ -1,5 +1,6 @@
 
 using Backend.Data;
+using Backend.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend
@@ -21,6 +22,11 @@ namespace Backend
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Cs"));
             });
+
+            // add scoped
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+           
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
