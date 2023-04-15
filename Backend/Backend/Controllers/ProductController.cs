@@ -29,5 +29,17 @@ namespace Backend.Controllers
             var product = await _product.GetProductByIdAsync(id);
             return Ok(product);
         }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
+        {
+            return Ok(await _product.GetProductTypesAsync());
+        }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+        {
+            return Ok(await _product.GetProductBrandsAsync());
+        }
     }
 }
