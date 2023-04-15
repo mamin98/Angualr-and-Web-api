@@ -1,4 +1,5 @@
 ﻿using Backend.Entities;
+using Backend.Specification;
 
 namespace Backend.Repository
 {
@@ -6,5 +7,7 @@ namespace Backend.Repository
     {
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();
+        Task<T> GetEntityWithSpec(ISpecification<T> spec);
+        Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
     }
 }
