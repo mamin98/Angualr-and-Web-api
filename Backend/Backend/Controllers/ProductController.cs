@@ -34,16 +34,18 @@ namespace Backend.Controllers
             var spec = new ProductWithTypesAndBrandsSpecification();
 
             var products = await _product.ListAsync(spec);
-            return products.Select(product => new ProductDto()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                PictureUrl = product.PictureUrl,
-                Price = product.Price,
-                ProductBrand = product.ProductBrand.Name,
-                ProductType = product.ProductType.Name
-            }).ToList();
+            //return products.Select(product => new ProductDto()
+            //{
+            //    Id = product.Id,
+            //    Name = product.Name,
+            //    Description = product.Description,
+            //    PictureUrl = product.PictureUrl,
+            //    Price = product.Price,
+            //    ProductBrand = product.ProductBrand.Name,
+            //    ProductType = product.ProductType.Name
+            //}).ToList();
+
+            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products));
         }
 
         [HttpGet("{id}")]
