@@ -1,4 +1,5 @@
-﻿using Backend.DTOs;
+﻿using AutoMapper;
+using Backend.DTOs;
 using Backend.Entities;
 using Backend.Repository;
 using Backend.Specification;
@@ -12,14 +13,17 @@ namespace Backend.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IGenericRepository<Product> _product;
+        private readonly IMapper _mapper;
         private readonly IGenericRepository<ProductType> _producttype;
         private readonly IGenericRepository<ProductBrand> _productbrand;
 
         public ProductController(IGenericRepository<Product> product,
+            IMapper mapper,
             IGenericRepository<ProductBrand> productbrand,
             IGenericRepository<ProductType> producttype)
         {
             _product = product;
+            _mapper = mapper;
             _producttype = producttype;
             _productbrand = productbrand;
         }
@@ -48,16 +52,18 @@ namespace Backend.Controllers
             var spec = new ProductWithTypesAndBrandsSpecification();
 
             var product = await _product.GetEntityWithSpec(spec);
-            return new ProductDto()
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                PictureUrl = product.PictureUrl,
-                Price = product.Price,
-                ProductBrand = product.ProductBrand.Name,
-                ProductType = product.ProductType.Name
-            };
+            //return new ProductDto()
+            //{
+            //    Id = product.Id,
+            //    Name = product.Name,
+            //    Description = product.Description,
+            //    PictureUrl = product.PictureUrl,
+            //    Price = product.Price,
+            //    ProductBrand = product.ProductBrand.Name,
+            //    ProductType = product.ProductType.Name
+            //};
+
+            return _mapper.Map<Product, ProductDto>(product);
         }
 
         [HttpGet("types")]
