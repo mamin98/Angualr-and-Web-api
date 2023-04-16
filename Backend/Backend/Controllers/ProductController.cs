@@ -1,4 +1,5 @@
-﻿using Backend.Entities;
+﻿using Backend.DTOs;
+using Backend.Entities;
 using Backend.Repository;
 using Backend.Specification;
 using Microsoft.AspNetCore.Http;
@@ -24,21 +25,39 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts() 
+        public async Task<ActionResult<List<ProductDto>>> GetProducts() 
         {
             var spec = new ProductWithTypesAndBrandsSpecification();
 
             var products = await _product.ListAsync(spec);
-            return Ok(products);
+            return products.Select(product => new ProductDto()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                PictureUrl = product.PictureUrl,
+                Price = product.Price,
+                ProductBrand = product.ProductBrand.Name,
+                ProductType = product.ProductType.Name
+            }).ToList();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Product>>> GetProductById(int id)
+        public async Task<ActionResult<ProductDto>> GetProductById(int id)
         {
             var spec = new ProductWithTypesAndBrandsSpecification();
 
             var product = await _product.GetEntityWithSpec(spec);
-            return Ok(product);
+            return new ProductDto()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                PictureUrl = product.PictureUrl,
+                Price = product.Price,
+                ProductBrand = product.ProductBrand.Name,
+                ProductType = product.ProductType.Name
+            };
         }
 
         [HttpGet("types")]
