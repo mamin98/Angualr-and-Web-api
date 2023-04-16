@@ -1,5 +1,6 @@
 ﻿using Backend.Entities;
 using Backend.Repository;
+using Backend.Specification;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,14 +26,18 @@ namespace Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts() 
         {
-            var products = await _product.ListAllAsync();
+            var spec = new ProductWithTypesAndBrandsSpecification();
+
+            var products = await _product.ListAsync(spec);
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Product>>> GetProductById(int id)
         {
-            var product = await _product.GetByIdAsync(id);
+            var spec = new ProductWithTypesAndBrandsSpecification();
+
+            var product = await _product.GetEntityWithSpec(spec);
             return Ok(product);
         }
 
