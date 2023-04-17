@@ -3,14 +3,13 @@ using Backend.DTOs;
 using Backend.Entities;
 using Backend.Repository;
 using Backend.Specification;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseApiController
     {
         private readonly IGenericRepository<Product> _product;
         private readonly IMapper _mapper;
