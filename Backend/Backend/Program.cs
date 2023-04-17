@@ -39,6 +39,9 @@ namespace Backend
                 app.UseSwaggerUI();
             }
 
+            // add StatusCode
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
             app.UseAuthorization();
 
 
