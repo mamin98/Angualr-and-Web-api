@@ -1,5 +1,6 @@
 
 using Backend.Data;
+using Backend.Middleware;
 using Backend.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,9 @@ namespace Backend
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // add my middleware
+            app.UseMiddleware<ExceptionMiddleware>();
 
             // add StatusCode
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
