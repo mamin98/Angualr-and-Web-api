@@ -28,9 +28,9 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDto>>> GetProducts() 
+        public async Task<ActionResult<List<ProductDto>>> GetProducts(string sort) 
         {
-            var spec = new ProductWithTypesAndBrandsSpecification();
+            var spec = new ProductWithTypesAndBrandsSpecification(sort);
 
             var products = await _product.ListAsync(spec);
             //return products.Select(product => new ProductDto()
@@ -50,7 +50,7 @@ namespace Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetProductById(int id)
         {
-            var spec = new ProductWithTypesAndBrandsSpecification();
+            var spec = new ProductWithTypesAndBrandsSpecification(id);
 
             var product = await _product.GetEntityWithSpec(spec);
             //return new ProductDto()

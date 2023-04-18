@@ -46,6 +46,9 @@ namespace Backend
             // add StatusCode
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 
